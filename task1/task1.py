@@ -1,6 +1,5 @@
 #Задание 1. Круговой массив
-n = int(input())
-m = int(input())
+n, m = map(int, input().split())
 i = 1
 while True:
     print(i, sep='', end = '')
