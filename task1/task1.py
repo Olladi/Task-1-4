@@ -1,9 +1,10 @@
-def get_circular_path(n, m):
-    path = []
-    i = 1
-    while True:
-        path.append(i)
-        i = 1 + (i + m - 2) % n
-        if i == 1:
-            break
-    return path
+#Задание 1. Круговой массив
+n = int(input())
+m = int(input())
+i = 1
+while True:
+    print(i, sep='', end = '')
+    i = 1 + (i + m - 2) % n
+    if i == 1:
+        break
+print()
