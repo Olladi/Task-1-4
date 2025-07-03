@@ -1,0 +1,34 @@
+import json
+import sys
+
+def load_values(path):
+   with open(path, 'r', encoding='utf-8') as f:
+      values_data = json.load(f)
+   return {item['id']: item['value'] for item in values_data['values']}
+
+def load_tests(path):
+    with open(path, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+def fill_values(test_list, id_to_value):
+    for test in test_list:
+        test_id = test.get('id')
+        if test_id in id_to_value:
+            test['value'] = id_to_value[test_id]
+        if 'values' in test:
+            fill_values(test['values'], id_to_value)
+
+
+def save_report(path, data):
+   with open(path, 'w', encoding='utf-8') as f:
+      json.dump(data, f, indent=2, ensure_ascii=False)
+
+def main():
+   tests_path = sys.argv[1]
+   values_path = sys.argv[2]
+   reports_path = sys.argv[3]
+
+   id_to_value = load_values(values_path)
+   tests_data = load_tests(tests_path)
+   fill_values(tests_data['tests'], id_to_value)
+   save_report(reports_path, tests_data)
